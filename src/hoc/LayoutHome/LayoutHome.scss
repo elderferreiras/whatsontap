@@ -1,0 +1,74 @@
+@import "../../assets/scss/variables";
+
+.LayoutHome {
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.50)), url(https://cdn-whatsontap.s3-us-west-2.amazonaws.com/assets/img/bg.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  header {
+    nav {
+      background-color: transparent;
+
+      a {
+        color: $secondary !important;
+
+        &.navbar-brand {
+          font-family: 'Lobster', cursive;
+        }
+
+        &.nav-link {
+          font-weight: bold;
+        }
+
+        &:hover {
+          text-decoration: underline !important;
+        }
+
+        &:focus {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+
+  .masthead {
+    min-height: 30rem;
+    position: relative;
+    display: table;
+    width: 100%;
+    height: auto;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+
+    h1, h3 {
+      color: $secondary;
+
+      p {
+        font-style: italic;
+      }
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    input {
+      border-radius: 10px;
+      border: 1px solid black;
+      height: 40px;
+      font-family: 'Source Sans Pro';
+    }
+
+    @media (min-width: 992px) {
+      h1 {
+        font-size: 5.5rem;
+      }
+    }
+  }
+}
+
+

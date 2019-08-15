@@ -1,0 +1,31 @@
+@import "../../assets/scss/variables";
+
+.LayoutSearch {
+  height: 100vh;
+
+  header {
+    .navbar {
+      background-color: #f8f9fa !important;
+
+      a {
+        color: $primary !important;
+
+        &.navbar-brand {
+          font-family: 'Lobster', cursive;
+        }
+
+        &.nav-link {
+          font-weight: bold;
+        }
+
+        &:hover {
+          text-decoration: underline !important;
+        }
+
+        &:focus {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+}
