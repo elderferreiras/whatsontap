@@ -28,7 +28,7 @@ class Home extends Component {
                         <Autocomplete
                             name="brewery"
                             placeholder="Type the name of a brewery or a local bar"
-                            className="col-lg-6 col-sm-12 col-md-8"
+                            className="col-lg-8 col-sm-12 col-md-8"
                             onPlaceSelected={(place) => {
                                 this.placeSelectedHandler(place)
                             }}

@@ -1,16 +1,25 @@
-import React, {Component} from 'react';
-import Autocomplete from "react-google-autocomplete";
-import LayoutSearch from "../../hoc/LayoutSearch/LayoutSearch";
 import './Search.scss';
+import React, {Component} from 'react';
+import Autocomplete from 'react-google-autocomplete';
+import LayoutSearch from '../../hoc/LayoutSearch/LayoutSearch';
+import Results from '../../components/Results/Results';
+import Loading from '../../components/UI/Loading/Loading';
+import ESTABLISHMENTS from '../../mockdata/Establishments';
+import BEERS from '../../mockdata/Beers';
+import ESTABLISHMENTS_BEERS from '../../mockdata/Establishment_beers';
 
 class Search extends Component {
     state = {
         results: null,
         placeId: null,
-        loading: null
+        loading: false
     };
 
     componentDidMount() {
+       this.resultsHandler();
+    }
+
+    resultsHandler = () => {
         const query = new URLSearchParams(this.props.location.search);
 
         let placeId = null;
@@ -26,9 +35,22 @@ class Search extends Component {
 
         if(placeId && address) {
             document.querySelector("[name=brewery]").value = address;
-            this.setState({ placeId: placeId});
+            this.setState({ placeId: placeId, results: this.getResults(placeId)});
         }
-    }
+    };
+
+    getResults = (placeId) => {
+        const establishment = ESTABLISHMENTS.find(establishment => establishment.place_id === placeId);
+        if(establishment) {
+            const relations = ESTABLISHMENTS_BEERS.filter(relation => relation.establishment_id === establishment.id).map(relation => relation.beer_id);
+
+            if(relations.length) {
+                return BEERS.filter(beer => relations.includes(beer.id));
+            }
+        }
+
+        return null;
+    };
 
     placeSelectedHandler = (place) => {
         const queryParams = [];
@@ -40,13 +62,27 @@ class Search extends Component {
             pathname: '/search',
             search: queryParams.join('&')
         });
+
+        this.resultsHandler();
+    };
+
+    changeHandler = (event) => {
+        const value = event.target.value;
+
+        if(value.length === 0) {
+            this.setState({'results':null});
+        }
     };
 
     render() {
         let results = <p className="lead mb-5 text-left">No results found for this search.</p>;
 
+        if(this.state.loading) {
+            results = <Loading/>;
+        }
+
         if(this.state.results) {
-            results = <p>Random results!</p>;
+            results = <Results results={this.state.results}/>;
         }
 
         return (
@@ -63,6 +99,7 @@ class Search extends Component {
                                         onPlaceSelected={(place) => {
                                             this.placeSelectedHandler(place)
                                         }}
+                                        onChange={this.changeHandler}
                                         types={['establishment']}
                                         componentRestrictions={{country: "us"}}
                                     />
