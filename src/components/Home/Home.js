@@ -13,7 +13,6 @@ class Home extends Component {
             pathname: '/search',
             search: queryParams.join('&')
         });
-        console.log(place);
     };
 
     render() {

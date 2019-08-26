@@ -7,6 +7,7 @@ import Loading from '../../components/UI/Loading/Loading';
 import ESTABLISHMENTS from '../../mockdata/Establishments';
 import BEERS from '../../mockdata/Beers';
 import ESTABLISHMENTS_BEERS from '../../mockdata/Establishment_beers';
+import axios from 'axios';
 
 class Search extends Component {
     state = {
@@ -35,7 +36,17 @@ class Search extends Component {
 
         if(placeId && address) {
             document.querySelector("[name=brewery]").value = address;
-            this.setState({ placeId: placeId, results: this.getResults(placeId)});
+
+            axios.get('?uid=' + placeId).then(res => {
+                if(res.input) {
+                    this.setState({ placeId: placeId, results: res.input});
+                } else {
+                    this.setState({ placeId: placeId, results: null});
+                }
+            }).catch(res => {
+                this.setState({ placeId: placeId, results: null});
+            });
+
         }
     };
 
@@ -106,6 +117,7 @@ class Search extends Component {
                                 </div>
                             </div>
                         </div>
+
                         <div className="row">
                             <div className="col-lg-10 mx-auto">
                                 <h2 className="text-left" style={{marginTop: '10px'}}>Search Results</h2>

@@ -5,6 +5,10 @@ import {BrowserRouter} from "react-router-dom";
 import App from './containers/App/App';
 import * as serviceWorker from './serviceWorker';
 
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://api.whatsontap.info/';
+
 const app = (
     <BrowserRouter>
         <App/>
