@@ -4,9 +4,6 @@ import Autocomplete from 'react-google-autocomplete';
 import LayoutSearch from '../../hoc/LayoutSearch/LayoutSearch';
 import Results from '../../components/Results/Results';
 import Loading from '../../components/UI/Loading/Loading';
-import ESTABLISHMENTS from '../../mockdata/Establishments';
-import BEERS from '../../mockdata/Beers';
-import ESTABLISHMENTS_BEERS from '../../mockdata/Establishment_beers';
 import axios from 'axios';
 
 class Search extends Component {
@@ -17,7 +14,7 @@ class Search extends Component {
     };
 
     componentDidMount() {
-       this.resultsHandler();
+        this.resultsHandler();
     }
 
     resultsHandler = () => {
@@ -26,41 +23,45 @@ class Search extends Component {
         let placeId = null;
         let address = null;
 
-        for(let param of query.entries()) {
-            if(param[0] === 'i') {
+        for (let param of query.entries()) {
+            if (param[0] === 'i') {
                 placeId = param[1];
-            } else if(param[0] === 'a'){
+            } else if (param[0] === 'a') {
                 address = param[1];
             }
         }
 
-        if(placeId && address) {
+        if (placeId && address) {
             document.querySelector("[name=brewery]").value = address;
+            this.setState({loading: true});
+            axios.get('?uid=' + placeId, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+            }).then(res => {
+                if (res.data.input) {
+                    const results = res.data.input.map(beer => {
+                        return {
+                            id: beer.id,
+                            name: beer.name,
+                            description: beer.description,
+                            abv: beer.abv,
+                            ibu: beer.ibu
+                        };
+                    });
 
-            axios.get('?uid=' + placeId).then(res => {
-                if(res.input) {
-                    this.setState({ placeId: placeId, results: res.input});
+                    this.setState({results: results});
+
                 } else {
-                    this.setState({ placeId: placeId, results: null});
+                    this.setState({results: null});
                 }
             }).catch(res => {
-                this.setState({ placeId: placeId, results: null});
+                this.setState({results: null});
+            }).finally(res => {
+                this.setState({placeId: placeId, loading: false});
             });
 
         }
-    };
-
-    getResults = (placeId) => {
-        const establishment = ESTABLISHMENTS.find(establishment => establishment.place_id === placeId);
-        if(establishment) {
-            const relations = ESTABLISHMENTS_BEERS.filter(relation => relation.establishment_id === establishment.id).map(relation => relation.beer_id);
-
-            if(relations.length) {
-                return BEERS.filter(beer => relations.includes(beer.id));
-            }
-        }
-
-        return null;
     };
 
     placeSelectedHandler = (place) => {
@@ -80,19 +81,19 @@ class Search extends Component {
     changeHandler = (event) => {
         const value = event.target.value;
 
-        if(value.length === 0) {
-            this.setState({'results':null});
+        if (value.length === 0) {
+            this.setState({'results': null});
         }
     };
 
     render() {
         let results = <p className="lead mb-5 text-left">No results found for this search.</p>;
 
-        if(this.state.loading) {
+        if (this.state.loading) {
             results = <Loading/>;
         }
 
-        if(this.state.results) {
+        if (this.state.results && this.state.results.length) {
             results = <Results results={this.state.results}/>;
         }
 
