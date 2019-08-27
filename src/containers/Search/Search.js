@@ -34,11 +34,7 @@ class Search extends Component {
         if (placeId && address) {
             document.querySelector("[name=brewery]").value = address;
             this.setState({loading: true});
-            axios.get('?uid=' + placeId, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                },
-            }).then(res => {
+            axios.get('?uid=' + placeId).then(res => {
                 if (res.data.input) {
                     const results = res.data.input.map(beer => {
                         return {
