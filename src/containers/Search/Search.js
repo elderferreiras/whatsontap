@@ -114,6 +114,7 @@ class Search extends Component {
                                         onChange={this.changeHandler}
                                         types={['establishment']}
                                         componentRestrictions={{country: "us"}}
+                                        style={{cursor:'pointer'}}
                                     />
                                 </div>
                             </div>
