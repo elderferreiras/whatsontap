@@ -12,6 +12,11 @@ class LayoutHome extends Component {
                 <main>
                     {this.props.children}
                 </main>
+                <footer className="footer text-center">
+                    <div className="container">
+                        <p className="text-muted small mb-0">Copyright © What's on tap? 2019</p>
+                    </div>
+                </footer>
             </div>
         );
     }

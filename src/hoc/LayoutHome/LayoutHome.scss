@@ -7,6 +7,39 @@
   background-repeat: no-repeat;
   background-size: cover;
 
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(236,184,7, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+  }
+
+  .content-section-heading {
+    color: $secondary;
+  }
+
+  .text-faded {
+    color: $secondary;
+    font-size: 2rem;
+  }
+
+  @media (max-width: 414px) {
+    .text-faded {
+      color: $secondary;
+      font-size: 1rem;
+    }
+
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+
+    .container {
+      p {
+        color: $secondary !important;
+      }
+    }
+  }
+
   header {
     nav {
       background-color: transparent;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router-dom";
 
 const navbar = () => {
     return (
@@ -8,8 +8,8 @@ const navbar = () => {
             <Navbar.Brand href="/">What's on tap?</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse className="justify-content-end">
-                    <Nav.Link href="/about">About</Nav.Link>
-                    <Nav.Link href="/contact">Contact</Nav.Link>
+                    <Link to="/about" className="nav-link">About</Link>
+                    <Link to="/contact" className="nav-link">Contact</Link>
             </Navbar.Collapse>
         </Navbar>
     );
