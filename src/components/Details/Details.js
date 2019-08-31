@@ -3,12 +3,11 @@ import { Card } from "react-bootstrap";
 
 const details = (props) => {
     const subtitle = [];
-
-    if(props.abv.length) {
+    if(props.abv) {
         subtitle.push(props.abv + '% ABV');
     }
 
-    if(props.ibu.length > 0) {
+    if(props.ibu) {
         subtitle.push(props.ibu + ' IBU');
     }
 
