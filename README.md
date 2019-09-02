@@ -1,4 +1,4 @@
-This project can be accessed at https://whatsontap.info
+You can check "What's on tap?" here https://whatsontap.info
 
 ## What's on tap?
 
